@@ -6,8 +6,8 @@ router = APIRouter()
 
 
 @router.get("/")
-async def people():
-    return {"message": "Hello people"}
+async def data():
+    return {"message": "Hello data"}
 
 
 @router.post("/create")

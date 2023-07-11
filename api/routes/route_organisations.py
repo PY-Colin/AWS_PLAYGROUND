@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException
+from ..dataMgt import gdb
 
 base_db = "organisations"
 
@@ -25,6 +26,13 @@ async def get_all():
     pass
 
 
-@router.get("/read_by_ref")
-async def get_by_ref():
-    pass
+@router.get("/read_by_ref/{ref}")
+async def get_by_ref(ref: str = ""):
+    resp = gdb.read_entity_by_email(
+        "MATCH (a:EQUIPMENT) where a.email = $email RETURN COLLECT(properties(a)) AS  equip ",
+        ref,
+        base_db,
+    )
+    print(f"entity_by_email = {resp}")
+    print(f"ref = {ref}")
+    return resp
